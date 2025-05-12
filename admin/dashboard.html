@@ -10,6 +10,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <style>
+        /* Custom styles for tabs to blend with Tailwind */
         .tab-button {
             padding: 0.75rem 1.5rem;
             border-radius: 9999px; /* Full rounded */
@@ -28,9 +29,42 @@
             color: #fff; /* White text for active tab */
             border-color: #000; /* Black border for active tab */
         }
+
+        /* Loading Spinner Styles */
+        .loading-spinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            z-index: 100; /* Ensure it's on top */
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white overlay */
+            z-index: 99; /* Below the spinner */
+        }
     </style>
 </head>
 <body class="bg-gray-50">
+    <div id="loadingSpinner" class="loading-spinner hidden"></div>
+    <div id="loadingOverlay" class="loading-overlay hidden"></div>
+
     <div class="flex h-screen">
         <div class="w-64 bg-black text-white p-6 hidden md:block">
             <div class="mb-8">
@@ -343,7 +377,7 @@
                     </div>
                     <div>
                         <label class="inline-flex items-center">
-                            <input type="checkbox" id="productInStock" name="inStock" class="rounded" checked>
+                            <input type="checkbox" id="productInStock" name="inStock" class="rounded">
                             <span class="ml-2">In Stock</span>
                         </label>
                     </div>
@@ -534,6 +568,22 @@
     let products = [];
     let orders = [];
 
+    // Get loading spinner and overlay elements
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    function showLoading() {
+        loadingSpinner.classList.remove('hidden');
+        loadingOverlay.classList.remove('hidden');
+    }
+
+    // Function to hide loading spinner
+    function hideLoading() {
+        loadingSpinner.classList.add('hidden');
+        loadingOverlay.classList.add('hidden');
+    }
+
+
     // Toast notification helper function
     function showToast(message, type = 'success') {
         const backgroundColor = type === 'success' ? '#4CAF50' :
@@ -701,7 +751,11 @@
             }
 
             const data = await response.json();
-            orders = data.orders || [];
+            // Ensure each order has a status, defaulting to 'Pending' if missing
+            orders = (data.orders || []).map(order => ({
+                ...order,
+                status: order.status || 'Pending'
+            }));
             return orders;
         } catch (error) {
             console.error('Error fetching orders:', error);
@@ -1383,6 +1437,7 @@
 
 
     async function initializeDashboard() {
+        showLoading(); // Show loading spinner before fetching
         try {
             await fetchProducts();
             await fetchOrders(); // This now fetches from the API
@@ -1397,6 +1452,8 @@
         } catch (error) {
             console.error('Error initializing dashboard:', error);
             showToast('Error loading dashboard. Please refresh the page.', 'error');
+        } finally {
+            hideLoading(); // Hide loading spinner after fetching (success or error)
         }
     }
 
