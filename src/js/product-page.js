@@ -1,23 +1,57 @@
 import fetchProducts from './products.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const params = new URLSearchParams(window.location.search);
-    const productId = parseInt(params.get('id'), 10);
+    // Show skeleton loader by default (already added 'loading' class in HTML)
+    const productContainer = document.getElementById('productContainer');
+    
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const productId = parseInt(params.get('id'), 10);
 
-    const { products } = await fetchProducts();
+        const { products } = await fetchProducts();
 
-    const product = products.find(p => p.id === productId);
+        const product = products.find(p => p.id === productId);
 
-    if (!product) {
-        window.location.href = '../index.html';
-        return;
+        if (!product) {
+            window.location.href = '../index.html';
+            return;
+        }
+
+        // Simulate network delay (optional, remove in production)
+        // await new Promise(resolve => setTimeout(resolve, 1000));
+
+        updateProductDetails(product);
+        setupQuantityControls();
+        setupAddToCart(product);
+        updateCartCount();
+        
+        // Hide skeleton loader and show content
+        productContainer.classList.remove('loading');
+    } catch (error) {
+        console.error('Error loading product:', error);
+        // Show error message to user
+        showErrorMessage();
     }
-
-    updateProductDetails(product);
-    setupQuantityControls();
-    setupAddToCart(product);
-    updateCartCount();
 });
+
+function showErrorMessage() {
+    const productContainer = document.getElementById('productContainer');
+    if (productContainer) {
+        productContainer.classList.remove('loading');
+        productContainer.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-12">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <h2 class="text-2xl font-medium mb-2">Error Loading Product</h2>
+                <p class="text-gray-600 mb-4">We couldn't load the product information. Please try again later.</p>
+                <a href="../index.html" class="bg-black text-white py-2 px-6 rounded-full font-medium hover:opacity-90 transition-opacity">
+                    Return to Home
+                </a>
+            </div>
+        `;
+    }
+}
 
 function updateProductDetails(product) {
     const nameEl = document.getElementById('productName');
@@ -37,11 +71,19 @@ function updateProductDetails(product) {
     if (descEl) descEl.textContent = product.description;
     if (reviewCountEl) reviewCountEl.textContent = `(${product.reviews} reviews)`;
 
-   if (mainImage) {
-  mainImage.src = product.image;
-  mainImage.alt = product.name;
-}
-
+    if (mainImage) {
+        // Add loading event for the image
+        mainImage.onload = function() {
+            mainImage.classList.add('loaded');
+        };
+        mainImage.onerror = function() {
+            // Handle image error
+            mainImage.src = '../assets/placeholder.jpg'; // Fallback image
+            mainImage.alt = 'Image not available';
+        };
+        mainImage.src = product.image;
+        mainImage.alt = product.name;
+    }
 
     if (ratingStars) {
         ratingStars.innerHTML = generateStarRating(product.rating);
@@ -124,7 +166,28 @@ function setupAddToCart(product) {
 
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
+        
+        // Provide visual feedback for adding to cart
+        showAddedToCartFeedback();
     });
+}
+
+function showAddedToCartFeedback() {
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    if (!addToCartBtn) return;
+    
+    // Save original text
+    const originalText = addToCartBtn.textContent;
+    
+    // Change button text and style
+    addToCartBtn.textContent = 'Added to Cart!';
+    addToCartBtn.classList.add('bg-green-600');
+    
+    // Restore original text and style after a delay
+    setTimeout(() => {
+        addToCartBtn.textContent = originalText;
+        addToCartBtn.classList.remove('bg-green-600');
+    }, 2000);
 }
 
 function updateCartCount() {

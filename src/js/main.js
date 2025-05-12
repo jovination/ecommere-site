@@ -1,9 +1,11 @@
 import products from './products.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const productsGrid = document.getElementById('products-grid');
-  const data = await products();
-  const productList = data.products || [];
+    const productsGrid = document.getElementById('products-grid');
+
+    // Fetch product data
+    const data = await products();
+    const productList = data.products || [];
 
     // Render product list
     function renderProducts(items) {

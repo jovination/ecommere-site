@@ -4,6 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../src/output.css" rel="stylesheet">
+    <style>
+        /* Skeleton loading animation */
+        .skeleton {
+          background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+          background-size: 200% 100%;
+          animation: skeleton-loading 1.5s infinite;
+        }
+
+        @keyframes skeleton-loading {
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
+        }
+
+        /* Hide content while loading */
+        .loading .content {
+            display: none;
+        }
+
+        /* Show skeleton only when loading */
+        .skeleton-loader {
+            display: none;
+        }
+        .loading .skeleton-loader {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <section class="container mx-auto px-6 md:px-8">
@@ -12,12 +42,10 @@
             <nav class="py-4 flex items-center justify-between">
                 <div>
                     <a href="../index.html">
-            <span class="text-3xl font-semibold">Smartica Gadgets</span>
+                        <span class= "text-lg md:text-2xl font-semibold">Smartica Gadgets</span>
                     </a>
                 </div>
-                <div class="flex items-center gap-8">
-                    <a href="#" class="login-btn">About</a>
-                    <a href="#" class="">FAQS</a>
+               
                     <div class="relative">
                         <a href="./cart.html" class="w-11 h-11 border rounded-full flex items-center justify-center cursor-pointer" id="cartIcon">
                             <svg class="w-6 h-6" viewBox="1 -1 100 100">
@@ -29,102 +57,176 @@
                         <!-- Cart Count Badge -->
                         <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" id="cartCount">0</span>
                     </div>
-                </div>
             </nav>
         </header>
 
         <!-- Product Section -->
-        <main class="py-8">
+        <main class="py-8 loading" id="productContainer">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Product Images Section -->
                 <div class="space-y-4">
                     <!-- Main Product Image -->
                     <div class="aspect-square rounded-3xl overflow-hidden bg-gray-100">
-                        <img id="mainProductImage" src="" alt="" class="w-full h-full object-cover">
+                        <!-- Skeleton Loader -->
+                        <div class="skeleton-loader w-full h-full">
+                            <div class="skeleton skeleton-image"></div>
+                        </div>
+                        <!-- Actual Content -->
+                        <div class="content">
+                            <img id="mainProductImage" src="" alt="" class="w-full h-full object-cover">
+                        </div>
                     </div>
                 </div>
 
                 <!-- Product Info Section -->
                 <div class="space-y-6">
                     <div>
-                        <p class="text-sm text-gray-500" id="productCategory">Category</p>
-                        <h1 class="text-3xl font-medium mt-1" id="productName">Product Name</h1>
-                        <div class="flex items-center gap-4 mt-2">
-                            <span class="text-2xl font-medium" id="productPrice">$0.00</span>
-                            <span class="text-sm text-gray-500 line-through" id="originalPrice">$0.00</span>
-                            <span class="text-sm font-medium bg-red-100 text-red-500 px-2 py-1 rounded-full" id="discountBadge">0% OFF</span>
+                        <!-- Skeleton Loader -->
+                        <div class="skeleton-loader space-y-4">
+                            <div class="skeleton skeleton-text sm"></div>
+                            <div class="skeleton skeleton-text xl"></div>
+                            <div class="flex items-center gap-4 mt-2">
+                                <div class="skeleton skeleton-text lg w-24"></div>
+                                <div class="skeleton skeleton-text sm w-16"></div>
+                                <div class="skeleton skeleton-text sm w-20"></div>
+                            </div>
+                        </div>
+                        <!-- Actual Content -->
+                        <div class="content">
+                            <p class="text-sm text-gray-500" id="productCategory">Category</p>
+                            <h1 class="text-3xl font-medium mt-1" id="productName">Product Name</h1>
+                            <div class="flex items-center gap-4 mt-2">
+                                <span class="text-2xl font-medium" id="productPrice">$0.00</span>
+                                <span class="text-sm text-gray-500 line-through" id="originalPrice">$0.00</span>
+                                <span class="text-sm font-medium bg-red-100 text-red-500 px-2 py-1 rounded-full" id="discountBadge">0% OFF</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Product Rating -->
-                    <div class="flex items-center gap-2">
-                        <div class="flex text-yellow-400" id="ratingStars">
-                            <!-- Stars will be inserted here via JavaScript -->
-                        </div>
-                        <span class="text-sm text-gray-500" id="reviewCount">(0 reviews)</span>
-                    </div>
+                
 
                     <!-- Color Options -->
                     <div>
-                        <p class="font-medium mb-3">Select Color</p>
-                        <div class="flex gap-3" id="colorOptions">
-                            <!-- Color options will be inserted here -->
+                        <!-- Skeleton Loader -->
+                        <div class="skeleton-loader">
+                            <div class="skeleton skeleton-text md mb-3"></div>
+                            <div class="flex gap-3">
+                                <div class="skeleton skeleton-circle w-8 h-8"></div>
+                                <div class="skeleton skeleton-circle w-8 h-8"></div>
+                                <div class="skeleton skeleton-circle w-8 h-8"></div>
+                            </div>
+                        </div>
+                        <!-- Actual Content -->
+                        <div class="content">
+                            <p class="font-medium mb-3">Select Color</p>
+                            <div class="flex gap-3" id="colorOptions">
+                                <!-- Color options will be inserted here -->
+                            </div>
                         </div>
                     </div>
 
                     <!-- Quantity Selector -->
                     <div>
-                        <p class="font-medium mb-3">Quantity</p>
-                        <div class="flex items-center gap-4">
-                            <button class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center" id="decreaseQuantity">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
-                                </svg>
-                            </button>
-                            <span class="text-lg font-medium" id="quantity">1</span>
-                            <button class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center" id="increaseQuantity">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
-                                </svg>
-                            </button>
+                        <!-- Skeleton Loader -->
+                        <div class="skeleton-loader">
+                            <div class="skeleton skeleton-text md mb-3"></div>
+                            <div class="flex items-center gap-4">
+                                <div class="skeleton skeleton-circle w-10 h-10"></div>
+                                <div class="skeleton skeleton-text w-6"></div>
+                                <div class="skeleton skeleton-circle w-10 h-10"></div>
+                            </div>
+                        </div>
+                        <!-- Actual Content -->
+                        <div class="content">
+                            <p class="font-medium mb-3">Quantity</p>
+                            <div class="flex items-center gap-4">
+                                <button class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center" id="decreaseQuantity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
+                                    </svg>
+                                </button>
+                                <span class="text-lg font-medium" id="quantity">1</span>
+                                <button class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center" id="increaseQuantity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Add to Cart Button -->
                     <div class="flex gap-4">
-                        <button class="flex-grow bg-black text-white py-3 px-6 rounded-full font-medium hover:opacity-90 transition-opacity cursor-pointer" id="addToCartBtn">
-                            Add to Cart
-                        </button>
-                        <button class="w-12 h-12 border border-black rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                            </svg>
-                        </button>
+                        <!-- Skeleton Loader -->
+                        <div class="skeleton-loader flex gap-4 w-full">
+                            <div class="skeleton skeleton-button flex-grow"></div>
+                            <!-- <div class="skeleton skeleton-circle w-12 h-12"></div> -->
+                        </div>
+                        <!-- Actual Content -->
+                        <div class="content flex gap-4 w-full">
+                            <button class="flex-grow bg-black text-white py-3 px-6 rounded-full font-medium hover:opacity-90 transition-opacity cursor-pointer" id="addToCartBtn">
+                                Add to Cart
+                            </button>
+                            <button class="w-12 h-12 border border-black rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Product Description -->
                     <div class="border-t border-gray-200 pt-6">
-                        <h3 class="font-medium mb-4">Product Description</h3>
-                        <p class="text-gray-600" id="productDescription">
-                            Product description will be displayed here.
-                        </p>
+                        <!-- Skeleton Loader -->
+                        <div class="skeleton-loader">
+                            <div class="skeleton skeleton-text md mb-4"></div>
+                            <div class="space-y-2">
+                                <div class="skeleton skeleton-text lg"></div>
+                                <div class="skeleton skeleton-text lg"></div>
+                                <div class="skeleton skeleton-text md"></div>
+                            </div>
+                        </div>
+                        <!-- Actual Content -->
+                        <div class="content">
+                            <h3 class="font-medium mb-4">Product Description</h3>
+                            <p class="text-gray-600" id="productDescription">
+                                Product description will be displayed here.
+                            </p>
+                        </div>
                     </div>
 
                     <!-- Delivery Information -->
                     <div class="border-t border-gray-200 pt-6">
-                        <h3 class="font-medium mb-4">Delivery Information</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-                                </svg>
-                                <span>Free delivery for orders over $50</span>
+                        <!-- Skeleton Loader -->
+                        <div class="skeleton-loader">
+                            <div class="skeleton skeleton-text md mb-4"></div>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="skeleton skeleton-circle w-5 h-5"></div>
+                                    <div class="skeleton skeleton-text md"></div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="skeleton skeleton-circle w-5 h-5"></div>
+                                    <div class="skeleton skeleton-text md"></div>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>Delivery within 3-5 business days</span>
+                        </div>
+                        <!-- Actual Content -->
+                        <div class="content">
+                            <h3 class="font-medium mb-4">Delivery Information</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                                    </svg>
+                                    <span>Free delivery for orders over $50</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>Delivery within 3-5 business days</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -135,5 +237,63 @@
 
 <script type="module" src="../src/js/products.js"></script>
 <script type="module" src="../src/js/product-page.js"></script>
+<style>
+    /* Skeleton loading animation */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Specific skeleton elements */
+.skeleton-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 1.5rem;
+}
+
+.skeleton-text {
+  border-radius: 4px;
+  margin-bottom: 8px;
+  height: 1rem;
+}
+
+.skeleton-text.sm {
+  width: 30%;
+  height: 0.875rem;
+}
+
+.skeleton-text.md {
+  width: 60%;
+}
+
+.skeleton-text.lg {
+  width: 90%;
+  height: 1.5rem;
+}
+
+.skeleton-text.xl {
+  width: 40%;
+  height: 2rem;
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+}
+
+.skeleton-button {
+  height: 3rem;
+  border-radius: 9999px;
+}
+</style>
 </body>
 </html>
