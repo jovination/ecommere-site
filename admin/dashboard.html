@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <style>
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 500; /* Medium font weight */
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            border: 1px solid transparent; /* Add a subtle border */
+        }
+
+        .tab-button:hover {
+            background-color: rgba(0, 0, 0, 0.05); /* Subtle hover effect */
+        }
+
+        .tab-button.active {
+            background-color: #000; /* Black background for active tab */
+            color: #fff; /* White text for active tab */
+            border-color: #000; /* Black border for active tab */
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
     <div class="flex h-screen">
@@ -36,6 +56,12 @@
                         <a href="#" class="flex items-center gap-3 py-2 text-white hover:text-gray-300" id="ordersNav">
                             <i class="fas fa-shopping-cart w-5"></i>
                             <span>Orders</span>
+                        </a>
+                    </li>
+                     <li class="pb-2 border-b border-gray-700">
+                        <a href="#" class="flex items-center gap-3 py-2 text-white hover:text-gray-300" id="reportsNav">
+                            <i class="fas fa-chart-line w-5"></i>
+                            <span>Reports</span>
                         </a>
                     </li>
                     <li class="pb-2 border-b border-gray-700">
@@ -207,7 +233,55 @@
                         </div>
                     </div>
                 </div>
-            </main>
+
+                <div id="reportsSection" class="space-y-6 hidden">
+                    <h2 class="text-xl font-semibold mb-4">Sales Reports</h2>
+
+                    <div class="flex space-x-4 mb-6">
+                        <button class="tab-button active" data-tab="daily">Daily</button>
+                        <button class="tab-button" data-tab="weekly">Weekly</button>
+                        <button class="tab-button" data-tab="monthly">Monthly</button>
+                    </div>
+
+                    <div id="reportContent">
+                        <div id="dailyReportContent" class="bg-white rounded-2xl p-6 shadow-sm space-y-4">
+                             <h3 class="text-lg font-medium">Daily Sales</h3>
+                            <p class="text-2xl font-bold" id="dailySalesTotal">$0.00</p>
+                            <div class="mt-4 text-sm text-gray-600">
+                                <p>Pending: <span id="dailyPendingOrders">0</span></p>
+                                <p>Processing: <span id="dailyProcessingOrders">0</span></p>
+                                <p>Shipped: <span id="dailyShippedOrders">0</span></p>
+                                <p>Delivered: <span id="dailyDeliveredOrders">0</span></p>
+                                <p>Cancelled: <span id="dailyCancelledOrders">0</span></p>
+                            </div>
+                        </div>
+
+                        <div id="weeklyReportContent" class="bg-white rounded-2xl p-6 shadow-sm space-y-4 hidden">
+                            <h3 class="text-lg font-medium">Weekly Sales</h3>
+                             <p class="text-2xl font-bold" id="weeklySalesTotal">$0.00</p>
+                            <div class="mt-4 text-sm text-gray-600">
+                                <p>Pending: <span id="weeklyPendingOrders">0</span></p>
+                                <p>Processing: <span id="weeklyProcessingOrders">0</span></p>
+                                <p>Shipped: <span id="weeklyShippedOrders">0</span></p>
+                                <p>Delivered: <span id="weeklyDeliveredOrders">0</span></p>
+                                <p>Cancelled: <span id="weeklyCancelledOrders">0</span></p>
+                            </div>
+                        </div>
+
+                        <div id="monthlyReportContent" class="bg-white rounded-2xl p-6 shadow-sm space-y-4 hidden">
+                            <h3 class="text-lg font-medium">Monthly Sales</h3>
+                             <p class="text-2xl font-bold" id="monthlySalesTotal">$0.00</p>
+                            <div class="mt-4 text-sm text-gray-600">
+                                <p>Pending: <span id="monthlyPendingOrders">0</span></p>
+                                <p>Processing: <span id="monthlyProcessingOrders">0</span></p>
+                                <p>Shipped: <span id="monthlyShippedOrders">0</span></p>
+                                <p>Delivered: <span id="monthlyDeliveredOrders">0</span></p>
+                                <p>Cancelled: <span id="monthlyCancelledOrders">0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </main>
         </div>
     </div>
 
@@ -434,6 +508,12 @@
                         <span>Orders</span>
                     </a>
                 </li>
+                 <li class="pb-2 border-b border-gray-700">
+                    <a href="#" class="flex items-center gap-3 py-2 text-white hover:text-gray-300 mobile-nav" data-target="reportsSection">
+                        <i class="fas fa-chart-line w-5"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
                 <li class="pb-2 border-b border-gray-700">
                     <a href="../index.html" class="flex items-center gap-3 py-2 text-white hover:text-gray-300">
                         <i class="fas fa-store w-5"></i>
@@ -475,6 +555,7 @@
     const dashboardSection = document.getElementById('dashboardSection');
     const productsSection = document.getElementById('productsSection');
     const ordersSection = document.getElementById('ordersSection');
+    const reportsSection = document.getElementById('reportsSection');
 
     document.getElementById('dashboardNav').addEventListener('click', function(e) {
         e.preventDefault();
@@ -491,6 +572,13 @@
         showSection(ordersSection);
     });
 
+    document.getElementById('reportsNav').addEventListener('click', function(e) {
+        e.preventDefault();
+        showSection(reportsSection);
+        generateReports(); // Generate reports when the section is shown
+    });
+
+
     // Mobile Navigation
     document.querySelectorAll('.mobile-nav').forEach(link => {
         link.addEventListener('click', function(e) {
@@ -499,6 +587,11 @@
             const targetSection = document.getElementById(targetId);
             showSection(targetSection);
             toggleMobileSidebar();
+
+            // Generate reports if the reports section is targeted
+            if (targetId === 'reportsSection') {
+                generateReports();
+            }
         });
     });
 
@@ -506,6 +599,7 @@
         dashboardSection.classList.add('hidden');
         productsSection.classList.add('hidden');
         ordersSection.classList.add('hidden');
+        reportsSection.classList.add('hidden');
         section.classList.remove('hidden');
     }
 
@@ -519,10 +613,10 @@
 
         if (mobileSidebar.classList.contains('-translate-x-full')) {
             mobileSidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
+            sidebarOverlay.classList.add('hidden');
         } else {
             mobileSidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
+            sidebarOverlay.classList.remove('hidden');
         }
     }
 
@@ -593,7 +687,6 @@
         }
     }
 
-    // --- Reverted fetchOrders function to fetch from API ---
     async function fetchOrders() {
         try {
             const response = await fetch(ORDERS_API_URL);
@@ -616,7 +709,6 @@
             return [];
         }
     }
-    // --- End of Reverted fetchOrders function ---
 
     async function createOrdersBasket() {
         try {
@@ -667,8 +759,13 @@
         document.getElementById('totalProducts').textContent = products.length;
         document.getElementById('totalOrders').textContent = orders.length;
 
-        // Use order.totals.total for calculating revenue
-        const totalRevenue = orders.reduce((sum, order) => sum + order.totals.total, 0);
+        // Calculate total revenue from all delivered/shipped orders for the main dashboard stat
+        const totalRevenue = orders.reduce((sum, order) => {
+            if (order.status === 'Delivered' || order.status === 'Shipped') {
+                return sum + order.totals.total;
+            }
+            return sum;
+        }, 0);
         document.getElementById('totalRevenue').textContent = `$${totalRevenue.toFixed(2)}`;
 
         updateRecentOrders();
@@ -742,7 +839,7 @@
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <img src="${product.image}" alt="${product.name}" class="h-16 w-16 object-cover rounded-lg">
+                    <img src="${product.image}" alt="${product.name}" class="h-16 w-16 object-cover rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/64x64/E5E7EB/111827?text=No+Image';">
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm font-medium">${product.name}</div>
@@ -1010,7 +1107,6 @@
             </div>
         `;
 
-        // Set the current status in the dropdown (defaulting to Processing as per JSON)
         document.getElementById('orderStatus').value = order.status; // Use actual order status
         document.getElementById('updateOrderStatus').setAttribute('data-id', order.id);
 
@@ -1163,6 +1259,7 @@
             viewOrderModal.classList.add('hidden');
             displayOrders();
             updateDashboardStats();
+            generateReports(); // Regenerate reports when status changes
             showToast(`Order #${orderId} status updated to "${newStatus}"`, 'success');
         } else {
             showToast('Failed to update order status. Please try again.', 'error');
@@ -1188,7 +1285,103 @@
         }
     });
 
-    // Initialize the Dashboard
+    // --- Reports Functions ---
+    const dailyReportContent = document.getElementById('dailyReportContent');
+    const weeklyReportContent = document.getElementById('weeklyReportContent');
+    const monthlyReportContent = document.getElementById('monthlyReportContent');
+    const tabButtons = document.querySelectorAll('.tab-button');
+
+    // Add event listeners to tab buttons
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tab = this.getAttribute('data-tab');
+            activateTab(tab);
+        });
+    });
+
+    function activateTab(tab) {
+        // Remove 'active' class from all buttons and add 'hidden' to all content
+        tabButtons.forEach(button => button.classList.remove('active'));
+        dailyReportContent.classList.add('hidden');
+        weeklyReportContent.classList.add('hidden');
+        monthlyReportContent.classList.add('hidden');
+
+        // Add 'active' class to the clicked button and show the corresponding content
+        document.querySelector(`.tab-button[data-tab="${tab}"]`).classList.add('active');
+        document.getElementById(`${tab}ReportContent`).classList.remove('hidden');
+    }
+
+
+    function generateReports() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Start of today
+
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay()); // Start of the current week (Sunday)
+        startOfWeek.setHours(0, 0, 0, 0);
+
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1); // Start of the current month
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        // Filter orders for each period
+        const dailyOrders = orders.filter(order => new Date(order.orderDate) >= today);
+        const weeklyOrders = orders.filter(order => new Date(order.orderDate) >= startOfWeek);
+        const monthlyOrders = orders.filter(order => new Date(order.orderDate) >= startOfMonth);
+
+        // Calculate totals and status counts for each period
+        const dailyReport = calculateReportData(dailyOrders);
+        const weeklyReport = calculateReportData(weeklyOrders);
+        const monthlyReport = calculateReportData(monthlyOrders);
+
+        // Update the HTML elements
+        document.getElementById('dailySalesTotal').textContent = `$${dailyReport.totalSales.toFixed(2)}`;
+        document.getElementById('dailyPendingOrders').textContent = dailyReport.statusCounts['Pending'] || 0;
+        document.getElementById('dailyProcessingOrders').textContent = dailyReport.statusCounts['Processing'] || 0;
+        document.getElementById('dailyShippedOrders').textContent = dailyReport.statusCounts['Shipped'] || 0;
+        document.getElementById('dailyDeliveredOrders').textContent = dailyReport.statusCounts['Delivered'] || 0;
+        document.getElementById('dailyCancelledOrders').textContent = dailyReport.statusCounts['Cancelled'] || 0;
+
+        document.getElementById('weeklySalesTotal').textContent = `$${weeklyReport.totalSales.toFixed(2)}`;
+        document.getElementById('weeklyPendingOrders').textContent = weeklyReport.statusCounts['Pending'] || 0;
+        document.getElementById('weeklyProcessingOrders').textContent = weeklyReport.statusCounts['Processing'] || 0;
+        document.getElementById('weeklyShippedOrders').textContent = weeklyReport.statusCounts['Shipped'] || 0;
+        document.getElementById('weeklyDeliveredOrders').textContent = weeklyReport.statusCounts['Delivered'] || 0;
+        document.getElementById('weeklyCancelledOrders').textContent = weeklyReport.statusCounts['Cancelled'] || 0;
+
+        document.getElementById('monthlySalesTotal').textContent = `$${monthlyReport.totalSales.toFixed(2)}`;
+        document.getElementById('monthlyPendingOrders').textContent = monthlyReport.statusCounts['Pending'] || 0;
+        document.getElementById('monthlyProcessingOrders').textContent = monthlyReport.statusCounts['Processing'] || 0;
+        document.getElementById('monthlyShippedOrders').textContent = monthlyReport.statusCounts['Shipped'] || 0;
+        document.getElementById('monthlyDeliveredOrders').textContent = monthlyReport.statusCounts['Delivered'] || 0;
+        document.getElementById('monthlyCancelledOrders').textContent = monthlyReport.statusCounts['Cancelled'] || 0;
+    }
+
+    // Helper function to calculate total sales (only Delivered or Shipped) and status counts
+    function calculateReportData(ordersList) {
+        let totalSales = 0;
+        const statusCounts = {
+            'Pending': 0,
+            'Processing': 0,
+            'Shipped': 0,
+            'Delivered': 0,
+            'Cancelled': 0
+        };
+
+        ordersList.forEach(order => {
+            // Only include 'Delivered' or 'Shipped' orders for total sales
+            if (order.status === 'Delivered' || order.status === 'Shipped') {
+                 totalSales += order.totals.total;
+            }
+
+            if (statusCounts[order.status] !== undefined) {
+                statusCounts[order.status]++;
+            }
+        });
+
+        return { totalSales, statusCounts };
+    }
+
+
     async function initializeDashboard() {
         try {
             await fetchProducts();
@@ -1197,6 +1390,8 @@
             displayProducts();
             displayOrders();
             updateDashboardStats();
+            generateReports(); // Generate reports on initial load
+            activateTab('daily'); // Activate the daily tab on initial load
 
             showToast('Dashboard loaded successfully!', 'success');
         } catch (error) {
