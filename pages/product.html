@@ -12,20 +12,20 @@
             <nav class="py-4 flex items-center justify-between">
                 <div>
                     <a href="../index.html">
-                        <span class="text-xl font-semibold">Urban Store</span>
+            <span class="text-3xl font-semibold">Smartica Gadgets</span>
                     </a>
                 </div>
                 <div class="flex items-center gap-8">
                     <a href="#" class="login-btn">About</a>
                     <a href="#" class="">FAQS</a>
                     <div class="relative">
-                        <div class="w-11 h-11 border rounded-full flex items-center justify-center cursor-pointer">
+                        <a href="./cart.html" class="w-11 h-11 border rounded-full flex items-center justify-center cursor-pointer" id="cartIcon">
                             <svg class="w-6 h-6" viewBox="1 -1 100 100">
                                 <path d="M74,70.7c-5.7,0-10.4,4.6-10.4,10.4c0,5.7,4.6,10.4,10.4,10.4c5.7,0,10.4-4.6,10.4-10.4c0,0,0,0,0,0 C84.3,75.4,79.7,70.7,74,70.7z"/>
                                 <path d="M92.3,21.1c-0.2,0-0.5-0.1-0.8-0.1H28.5l-1-6.7c-0.6-4.4-4.4-7.7-8.9-7.7h-8.1c-2.2,0-4,1.8-4,4s1.8,4,4,4h8.1 c0.5,0,0.9,0.4,1,0.9l6.2,42.2C26.6,63,31.2,67,36.6,67h41.6c5.2,0,9.7-3.7,10.8-8.8l6.5-32.5C95.9,23.6,94.5,21.5,92.3,21.1z"/>
                                 <path d="M38.2,70.7C32.4,71,28,75.8,28.2,81.5c0.2,5.5,4.7,9.9,10.2,9.9h0.2c5.7-0.3,10.2-5.1,9.9-10.8 C48.3,75.1,43.7,70.7,38.2,70.7z"/>
                             </svg>
-                        </div>
+                        </a>
                         <!-- Cart Count Badge -->
                         <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" id="cartCount">0</span>
                     </div>
@@ -92,7 +92,7 @@
 
                     <!-- Add to Cart Button -->
                     <div class="flex gap-4">
-                        <button class="flex-grow bg-black text-white py-3 px-6 rounded-full font-medium hover:opacity-90 transition-opacity" id="addToCartBtn">
+                        <button class="flex-grow bg-black text-white py-3 px-6 rounded-full font-medium hover:opacity-90 transition-opacity cursor-pointer" id="addToCartBtn">
                             Add to Cart
                         </button>
                         <button class="w-12 h-12 border border-black rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">

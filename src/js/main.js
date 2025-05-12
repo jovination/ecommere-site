@@ -1,10 +1,13 @@
 import products from './products.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const productsGrid = document.getElementById('products-grid');
+document.addEventListener('DOMContentLoaded', async () => {
+  const productsGrid = document.getElementById('products-grid');
+  const data = await products();
+  const productList = data.products || [];
 
-    function renderProducts() {
-        productsGrid.innerHTML = products.map(product => `
+    // Render product list
+    function renderProducts(items) {
+        productsGrid.innerHTML = items.map(product => `
             <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                  onclick="window.location.href='pages/product.html?id=${product.id}'">
                 <div class="relative pt-[100%] bg-gray-100">
@@ -46,5 +49,5 @@ document.addEventListener('DOMContentLoaded', () => {
             `).join('');
     }
 
-    renderProducts();
+    renderProducts(productList);
 });

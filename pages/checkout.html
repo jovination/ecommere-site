@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../src/output.css" rel="stylesheet">
+    <title>Checkout - Urban Store</title>
+</head>
+<body>
+    <section class="container mx-auto px-6 md:px-8">
+        <!-- Header/Navigation -->
+        <header class="h-auto">
+            <nav class="py-4 flex items-center justify-between">
+                <div>
+                    <a href="../index.html">
+            <span class="text-3xl font-semibold">Smartica Gadgets</span>
+                    </a>
+                </div>
+                <div class="flex items-center gap-8">
+                    <a href="#" class="login-btn">About</a>
+                    <a href="#" class="">FAQS</a>
+                    <div class="relative">
+                        <a href="./cart.html" class="w-11 h-11 border rounded-full flex items-center justify-center cursor-pointer" id="cartIcon">
+                            <svg class="w-6 h-6" viewBox="1 -1 100 100">
+                                <path d="M74,70.7c-5.7,0-10.4,4.6-10.4,10.4c0,5.7,4.6,10.4,10.4,10.4c5.7,0,10.4-4.6,10.4-10.4c0,0,0,0,0,0 C84.3,75.4,79.7,70.7,74,70.7z"/>
+                                <path d="M92.3,21.1c-0.2,0-0.5-0.1-0.8-0.1H28.5l-1-6.7c-0.6-4.4-4.4-7.7-8.9-7.7h-8.1c-2.2,0-4,1.8-4,4s1.8,4,4,4h8.1 c0.5,0,0.9,0.4,1,0.9l6.2,42.2C26.6,63,31.2,67,36.6,67h41.6c5.2,0,9.7-3.7,10.8-8.8l6.5-32.5C95.9,23.6,94.5,21.5,92.3,21.1z"/>
+                                <path d="M38.2,70.7C32.4,71,28,75.8,28.2,81.5c0.2,5.5,4.7,9.9,10.2,9.9h0.2c5.7-0.3,10.2-5.1,9.9-10.8 C48.3,75.1,43.7,70.7,38.2,70.7z"/>
+                            </svg>
+                        </a>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" id="cartCount">0</span>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Checkout Progress -->
+        <div class="py-6">
+            <div class="flex justify-between max-w-md mx-auto">
+                <div class="flex flex-col items-center">
+                    <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                        1
+                    </div>
+                    <span class="text-sm mt-1">Cart</span>
+                </div>
+                <div class="relative flex items-center flex-grow px-2">
+                    <div class="h-1 bg-black w-full"></div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                        2
+                    </div>
+                    <span class="text-sm mt-1">Details</span>
+                </div>
+                <div class="relative flex items-center flex-grow px-2">
+                    <div class="h-1 bg-gray-300 w-full"></div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center">
+                        3
+                    </div>
+                    <span class="text-sm mt-1">Confirmation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="py-8">
+            <h1 class="text-2xl font-medium mb-8">Complete Your Order</h1>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Checkout Form -->
+                <div class="flex-grow">
+                    <form id="checkoutForm" class="space-y-8">
+                        <!-- Contact Information -->
+                        <div class="bg-white rounded-xl p-6 border">
+                            <h2 class="text-lg font-medium mb-4">Contact Information</h2>
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="firstName" class="block text-sm text-gray-600 mb-1">First Name</label>
+                                        <input type="text" id="firstName" name="firstName" required
+                                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label for="lastName" class="block text-sm text-gray-600 mb-1">Last Name</label>
+                                        <input type="text" id="lastName" name="lastName" required
+                                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm text-gray-600 mb-1">Email</label>
+                                    <input type="email" id="email" name="email" required
+                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm text-gray-600 mb-1">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" required
+                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Information -->
+                        <div class="bg-white rounded-xl p-6 border">
+                            <h2 class="text-lg font-medium mb-4">Shipping Address</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="address" class="block text-sm text-gray-600 mb-1">Street Address</label>
+                                    <input type="text" id="address" name="address" required
+                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                </div>
+                                <div>
+                                    <label for="apartment" class="block text-sm text-gray-600 mb-1">Apartment, suite, etc. (optional)</label>
+                                    <input type="text" id="apartment" name="apartment"
+                                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label for="city" class="block text-sm text-gray-600 mb-1">City</label>
+                                        <input type="text" id="city" name="city" required
+                                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label for="state" class="block text-sm text-gray-600 mb-1">State</label>
+                                        <select id="state" name="state" required
+                                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                            <option value="">Select State</option>
+                                            <option value="AL">Alabama</option>
+                                            <option value="AK">Alaska</option>
+                                            <option value="AZ">Arizona</option>
+                                            <option value="CA">California</option>
+                                            <option value="CO">Colorado</option>
+                                            <option value="NY">New York</option>
+                                            <option value="TX">Texas</option>
+                                            <!-- Other states would be included in a real implementation -->
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="zip" class="block text-sm text-gray-600 mb-1">ZIP Code</label>
+                                        <input type="text" id="zip" name="zip" required
+                                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Delivery Method -->
+                        <div class="bg-white rounded-xl p-6 border">
+                            <h2 class="text-lg font-medium mb-4">Delivery Method</h2>
+                            <div class="space-y-4">
+                                <div class="flex gap-4 mb-4">
+                                    <div class="flex items-center">
+                                        <input type="radio" id="standardShipping" name="deliveryMethod" value="standard" checked
+                                            class="w-4 h-4 mr-2">
+                                        <label for="standardShipping" class="flex items-center">
+                                            <span>Standard Shipping (3-5 days)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="flex items-center">
+                                        <input type="radio" id="expressShipping" name="deliveryMethod" value="express"
+                                            class="w-4 h-4 mr-2">
+                                        <label for="expressShipping" class="flex items-center">
+                                            <span>Express Delivery (1-2 days)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="flex items-start">
+                            <input type="checkbox" id="terms" name="terms" required class="mt-1 mr-2">
+                            <label for="terms" class="text-sm text-gray-600">
+                                I agree to the <a href="#" class="text-black underline">Terms and Conditions</a> and <a href="#" class="text-black underline">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:w-80">
+                    <div class="bg-gray-50 rounded-xl p-6 border sticky top-8">
+                        <h2 class="text-lg font-medium mb-4">Order Summary</h2>
+                        
+                        <!-- Items Summary -->
+                        <div class="space-y-3 mb-4">
+                            <div id="orderItems">
+                                <!-- Order items will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Apply Promo Code -->
+                        <div class="flex gap-2 mb-6">
+                            <input type="text" placeholder="Promo code" class="flex-grow px-4 py-2 border rounded-lg">
+                            <button class="bg-gray-800 text-white px-4 py-2 rounded-lg">Apply</button>
+                        </div>
+                        
+                        <!-- Order Total Calculation -->
+                        <div class="space-y-3 mb-6 pt-4 border-t border-gray-200">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="orderSubtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Shipping</span>
+                                <span id="orderShipping">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tax</span>
+                                <span id="orderTax">$0.00</span>
+                            </div>
+                            <div class="pt-3 border-t border-gray-200 flex justify-between font-medium">
+                                <span>Total</span>
+                                <span id="orderTotal">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Place Order Button -->
+                        <button id="placeOrderBtn" class="w-full bg-black text-white py-3 rounded-full font-medium hover:opacity-90 transition-opacity">
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <script type="module" src="../src/js/checkout.js"></script>
+</body>
+</html>
