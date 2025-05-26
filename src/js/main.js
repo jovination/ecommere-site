@@ -17,38 +17,35 @@ document.addEventListener('DOMContentLoaded', async () => {
             const clickHandler = isInStock ? `window.location.href='pages/product.html?id=${product.id}'` : '';
 
             return `
-                <div class="${productCardClasses}"
-                     onclick="${clickHandler}">
-                    <div class="relative pt-[100%] bg-gray-100">
-                        <img src="${product.image}" alt="${product.name}" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="relative bg-white max-w-[360px] w-full h-auto rounded-[30px] shadow-md p-6" onclick="${clickHandler}">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-[300px] rounded-[24px] object-cover ${isInStock ? '' : 'opacity-60'}" />
                         ${!isInStock ? 
-                            `<div class="absolute inset-0 flex items-center justify-center  bg-opacity-75 text-white text-sm font-bold text-center p-2">
+                            `<div class="absolute top-5 left-5 right-5 h-[300px] flex items-center justify-center bg-opacity-75 text-white text-sm font-bold text-center rounded-[24px]">
                                 OUT OF STOCK
-                             </div>`
+                            </div>`
                             : ''}
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-medium text-gray-900 text-lg">${product.name}</h3>
-                        <p class="text-sm text-gray-600 mt-1">${product.description}</p>
-                        <div class="flex items-center mt-2">
-                            <div class="flex text-yellow-400" id="rating-${product.id}">
-                                ${renderStarRating(product.rating)}
+                        <div class="mt-3">
+                            <h3 class="font-medium text-gray-900 text-lg">${product.name}</h3>
+                            <p class="text-sm text-gray-600 mt-1">${product.description}</p>
+                            <div class="flex items-center mt-2">
+                                <div class="flex text-yellow-400" id="rating-${product.id}">
+                                    ${renderStarRating(product.rating)}
+                                </div>
+                                <span class="text-xs text-gray-500 ml-1">(${product.reviews})</span>
                             </div>
-                            <span class="text-xs text-gray-500 ml-1">(${product.reviews})</span>
-                        </div>
-                        <div class="flex items-center justify-between mt-3">
-                            <div>
-                                <span class="font-medium text-lg">$${product.price}</span>
+                            <div class="flex items-center justify-between mt-3">
+                                <div>
+                                    <span class="font-medium text-lg">$${product.price}</span>
                                 ${product.originalPrice ?
-                                    `<span class="text-gray-400 line-through text-sm ml-1">$${product.originalPrice}</span>`
+                                        `<span class="text-gray-400 line-through text-sm ml-1">$${product.originalPrice}</span>`
+                                        : ''}
+                                </div>
+                                ${product.discount ?
+                                    `<span class="text-xs font-medium bg-red-100 text-red-500 px-2 py-0.5 rounded-full">${product.discount}% OFF</span>`
                                     : ''}
                             </div>
-                            ${product.discount ?
-                                `<span class="text-xs font-medium bg-red-100 text-red-500 px-2 py-0.5 rounded-full">${product.discount}% OFF</span>`
-                                : ''}
                         </div>
                     </div>
-                </div>
             `;
         }).join('');
     }
